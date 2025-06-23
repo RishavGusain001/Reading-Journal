@@ -31,21 +31,20 @@ A beautifully designed desktop application to help you **track your reading jour
 
 ## 📁 Project Structure
 
-BookNotes/
-├── assets/
-│ ├── background.jpg
-│ └── book.gif
-├── data/
-│ ├── books.json
-│ └── summaries.json
-├── pages/
-│ ├── start_page.py
-│ ├── book_select_page.py
-│ └── summary_page.py
-├── utils/
-│ └── helpers.py (optional)
-├── main.py
-└── README.md
+BookNotes/<br>
+├── assets/<br>
+│ ├── background.jpg<br>
+├── data/<br>
+│ ├── books.json<br>
+│ └── summaries.json<br>
+├── pages/<br>
+│ ├── start_page.py<br>
+│ ├── book_select_page.py<br>
+│ └── summary_page.py<br>
+├── utils/<br>
+│ └── helpers.py (optional)<br>
+├── main.py<br>
+└── README.md<br>
 
 ---
 
@@ -60,15 +59,15 @@ BookNotes/
 --- 
 
 🛠 Technologies Used
--> Python 3.x
--> tkinter
--> ttkbootstrap
--> Pillow (PIL) for image handling
--> JSON for data storage
+-> Python 3.x<br>
+-> tkinter<br>
+-> ttkbootstrap<br>
+-> Pillow (PIL) for image handling<br>
+-> JSON for data storage<br>
 
 ---
 
 👨‍💻 Author
-Rishav Gusain
-rishavgusain001@gmail.com
+- Rishav Gusain
+- rishavgusain001@gmail.com
 📍 Uttarakhand, India
