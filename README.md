@@ -58,7 +58,7 @@ BookNotes/<br>
 
 --- 
 
-🛠 Technologies Used
+🛠 Technologies Used<br>
 -> Python 3.x<br>
 -> tkinter<br>
 -> ttkbootstrap<br>
@@ -71,3 +71,7 @@ BookNotes/<br>
 - Rishav Gusain
 - rishavgusain001@gmail.com
 📍 Uttarakhand, India
+
+UPDATES 
+- NOW YOU CAN ADD IMAGES IN THE NOTES/SUMMARY SECTION .
+- ![image](https://github.com/user-attachments/assets/df980518-2278-4bf8-a526-d4e1ac44c22a)
