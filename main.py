@@ -11,6 +11,7 @@ class ReadingJournalApp(ttk.Window):
         self.title("📚 Reading Journal")
         self.state('zoomed')  # Fullscreen
 
+        self.iconbitmap("assets/icon.ico")
         # Main container WITHOUT background color
         container = ttk.Frame(self, style="TFrame")  # <- important change: neutral base frame
         container.pack(side="top", fill="both", expand=True)
