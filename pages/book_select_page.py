@@ -50,6 +50,34 @@ class BookSelectPage(ttk.Frame):
         with open("data/books.json", "w") as f:
             json.dump(self.books, f, indent=4)
 
+    def load_chapters(self):
+        try:
+            with open("data/summaries.json", "r") as f:
+                return json.load(f)
+        except:
+            return []
+
+    def delete_summary(self, entry):
+        confirm = messagebox.askyesno("Confirm", f"Delete summary '{entry['chapter']}' from '{entry['book']}'?")
+        if not confirm:
+            return
+
+        try:
+            with open("data/summaries.json", "r") as f:
+                summaries = json.load(f)
+        except:
+            summaries = []
+
+        summaries = [s for s in summaries if not (
+            s["book"] == entry["book"] and s["chapter"] == entry["chapter"] and s["date"] == entry["date"]
+        )]
+
+        with open("data/summaries.json", "w") as f:
+            json.dump(summaries, f, indent=4)
+
+        messagebox.showinfo("Deleted", "Summary deleted successfully!")
+        self.render_books()
+
     def render_books(self):
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
@@ -62,38 +90,50 @@ class BookSelectPage(ttk.Frame):
             container.pack(anchor="center")
 
             image_path = book.get("image", "")
-        try:
-            img = Image.open(image_path)
-            img = img.resize((140, 200))
-            photo = ImageTk.PhotoImage(img)
-            self.book_images[book['title']] = photo
+            try:
+                img = Image.open(image_path)
+                img = img.resize((140, 200))
+                photo = ImageTk.PhotoImage(img)
+                self.book_images[book['title']] = photo
 
-            img_label = ttk.Label(container, image=photo)
-            img_label.pack(side="left", padx=(0, 20))
-        except:
-            img_label = ttk.Label(container, text="[No Image]", bootstyle="secondary")
-            img_label.pack(side="left", padx=(0, 20))
+                img_label = ttk.Label(container, image=photo)
+                img_label.pack(side="left", padx=(0, 20))
+            except:
+                img_label = ttk.Label(container, text="[No Image]", bootstyle="secondary")
+                img_label.pack(side="left", padx=(0, 20))
 
-        title_btn = ttk.Button(
-            container,
-            text=book['title'],
-            width=25,
-            bootstyle="info outline",
-            command=lambda b=book: self.controller.open_summary_page(b)
-        )
-        title_btn.pack(side="left", ipadx=5, ipady=5)
-        chapters = self.get_chapters_for_book(book['title'])
-
-        for chapter in chapters:
-            chapter_button = ttk.Button(
-                frame,
-                text=chapter["chapter"],
-                width=35,
-                bootstyle="primary outline",
-                command=lambda c=chapter: self.controller.open_summary_page(c, is_existing=True)
+            title_btn = ttk.Button(
+                container,
+                text=book['title'],
+                width=25,
+                bootstyle="info outline",
+                command=lambda b=book: self.controller.open_summary_page(b)
             )
-            chapter_button.pack(anchor="w", padx=40, pady=2)
+            title_btn.pack(side="left", ipadx=5, ipady=5)
 
+            chapters = self.get_chapters_for_book(book['title'])
+
+            for chapter in chapters:
+                chapter_row = ttk.Frame(frame)
+                chapter_row.pack(anchor="w", padx=40, pady=2, fill="x")
+
+                chapter_button = ttk.Button(
+                    chapter_row,
+                    text=chapter["chapter"],
+                    width=35,
+                    bootstyle="primary outline",
+                    command=lambda c=chapter: self.controller.open_summary_page(c, is_existing=True)
+                )
+                chapter_button.pack(side="left")
+
+                delete_btn = ttk.Button(
+                    chapter_row,
+                    text="🗑",
+                    width=3,
+                    bootstyle="danger outline",
+                    command=lambda c=chapter: self.delete_summary(c)
+                )
+                delete_btn.pack(side="left", padx=5)
 
     def open_add_book(self):
         def add_book():
@@ -127,7 +167,11 @@ class BookSelectPage(ttk.Frame):
         image_entry = ttk.Entry(image_frame, textvariable=image_path)
         image_entry.pack(side="left", expand=True, fill="x")
 
-        browse_btn = ttk.Button(image_frame, text="Browse", command=lambda: image_path.set(filedialog.askopenfilename(filetypes=[("Images", "*.png;*.jpg;*.jpeg")])))
+        browse_btn = ttk.Button(
+            image_frame,
+            text="Browse",
+            command=lambda: image_path.set(filedialog.askopenfilename(filetypes=[("Images", "*.png;*.jpg;*.jpeg")]))
+        )
         browse_btn.pack(side="left", padx=5)
 
         ttk.Button(top, text="Add Book", bootstyle="success", command=add_book).pack(pady=15)
