@@ -51,7 +51,6 @@ class BookSelectPage(ttk.Frame):
             json.dump(self.books, f, indent=4)
 
     def render_books(self):
-        # Clear old widgets
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
 
@@ -63,26 +62,38 @@ class BookSelectPage(ttk.Frame):
             container.pack(anchor="center")
 
             image_path = book.get("image", "")
-            try:
-                img = Image.open(image_path)
-                img = img.resize((140, 200))
-                photo = ImageTk.PhotoImage(img)
-                self.book_images[book['title']] = photo
+        try:
+            img = Image.open(image_path)
+            img = img.resize((140, 200))
+            photo = ImageTk.PhotoImage(img)
+            self.book_images[book['title']] = photo
 
-                img_label = ttk.Label(container, image=photo)
-                img_label.pack(side="left", padx=(0, 20))
-            except:
-                img_label = ttk.Label(container, text="[No Image]", bootstyle="secondary")
-                img_label.pack(side="left", padx=(0, 20))
+            img_label = ttk.Label(container, image=photo)
+            img_label.pack(side="left", padx=(0, 20))
+        except:
+            img_label = ttk.Label(container, text="[No Image]", bootstyle="secondary")
+            img_label.pack(side="left", padx=(0, 20))
 
-            title_btn = ttk.Button(
-                container,
-                text=book['title'],
-                width=25,
-                bootstyle="info outline",
-                command=lambda b=book: self.controller.open_summary_page(b)
+        title_btn = ttk.Button(
+            container,
+            text=book['title'],
+            width=25,
+            bootstyle="info outline",
+            command=lambda b=book: self.controller.open_summary_page(b)
+        )
+        title_btn.pack(side="left", ipadx=5, ipady=5)
+        chapters = self.get_chapters_for_book(book['title'])
+
+        for chapter in chapters:
+            chapter_button = ttk.Button(
+                frame,
+                text=chapter["chapter"],
+                width=35,
+                bootstyle="primary outline",
+                command=lambda c=chapter: self.controller.open_summary_page(c, is_existing=True)
             )
-            title_btn.pack(side="left", ipadx=5, ipady=5)
+            chapter_button.pack(anchor="w", padx=40, pady=2)
+
 
     def open_add_book(self):
         def add_book():
@@ -120,3 +131,11 @@ class BookSelectPage(ttk.Frame):
         browse_btn.pack(side="left", padx=5)
 
         ttk.Button(top, text="Add Book", bootstyle="success", command=add_book).pack(pady=15)
+
+    def get_chapters_for_book(self, book_title):
+        try:
+            with open("data/summaries.json", "r") as f:
+                data = json.load(f)
+            return [entry for entry in data if entry['book'] == book_title]
+        except:
+            return []

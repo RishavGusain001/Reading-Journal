@@ -32,9 +32,12 @@ class ReadingJournalApp(ttk.Window):
         frame = self.frames[page_name]
         frame.tkraise()
 
-    def open_summary_page(self, book):
+    def open_summary_page(self, book_or_entry, is_existing=False):
         summary_frame = self.frames["SummaryPage"]
-        summary_frame.load_book(book)
+        if is_existing:
+            summary_frame.load_existing_entry(book_or_entry)
+        else:
+            summary_frame.load_book(book_or_entry)
         self.show_frame("SummaryPage")
 
 if __name__ == "__main__":

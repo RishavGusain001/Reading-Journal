@@ -159,3 +159,26 @@ class SummaryPage(tk.Frame):
 
         tk.messagebox.showinfo("Saved", "✅ Summary saved!")
         self.load_book(self.current_book)
+
+    def load_existing_entry(self, entry):
+        self.current_book = {"title": entry["book"]}
+        self.title_label.config(text=f"📘 {entry['book']}")
+
+        self.chapter_entry.delete(0, tk.END)
+        self.chapter_entry.insert(0, entry["chapter"])
+
+        self.date_entry.delete(0, tk.END)
+        self.date_entry.insert(0, entry["date"])
+
+        for label, txt in self.text_fields.items():
+            txt.delete("1.0", tk.END)
+            txt.insert("1.0", entry["sections"].get(label, {}).get("text", ""))
+
+        for label, img_label in self.image_labels.items():
+            path = entry["sections"].get(label, {}).get("image", None)
+            if path and os.path.exists(path):
+                img = Image.open(path)
+                img.thumbnail((300, 200))
+                photo = ImageTk.PhotoImage(img)
+                img_label.configure(image=photo)
+                img_label.image = photo
