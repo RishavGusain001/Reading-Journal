@@ -67,14 +67,19 @@ BookNotes/<br>
 
 ---
 
-👨‍💻 Author
-- Rishav Gusain
-- rishavgusain001@gmail.com
-📍 Uttarakhand, India
-
 UPDATES 
 - NOW YOU CAN ADD IMAGES IN THE NOTES/SUMMARY SECTION .
   ![image](https://github.com/user-attachments/assets/df980518-2278-4bf8-a526-d4e1ac44c22a)
 - NOW YOU CAN ALSO ACCESS THE OLD RECORD WHICH YOU ENTER .
   ![image](https://github.com/user-attachments/assets/b9d53ebc-f364-471b-a115-d37caee84cec)
+- NOW YOU CAN ALSO ADD MORE THEN ONE IMAGE AND ALSO DELETE THE IMAGE ,ALSO A SUMMARY TOO.
+  ![image](https://github.com/user-attachments/assets/a5b710b1-3b73-426c-95a9-124cab60af06) ![image](https://github.com/user-attachments/assets/aa263ef4-b23a-4c99-8604-450713987069)
 
+
+
+--- 
+
+👨‍💻 Author
+- Rishav Gusain
+- rishavgusain001@gmail.com
+📍 Uttarakhand, India
